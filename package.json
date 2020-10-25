@@ -1,0 +1,14 @@
+{
+  "name": "capabilities-workshop",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "lite-server",
+    "workbox": "workbox"
+  },
+  "author": "Christian Liebel",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "lite-server": "^2.5.4",
+    "workbox-cli": "^5.1.4"
+  }
+}
