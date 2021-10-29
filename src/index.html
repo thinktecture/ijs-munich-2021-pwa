@@ -14,5 +14,10 @@
     <!-- Place canvas here. -->
     <canvas id="canvas" width="600" height="480"></canvas>
     <script src="app.js" type="module"></script>
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 </html>
