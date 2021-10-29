@@ -56,3 +56,11 @@ btnOpen.addEventListener('click', async () => {
     const image = await getImage(file);
     ctx.drawImage(image, 0, 0);
 });
+
+const btnCopy = document.querySelector('#copy');
+btnCopy.addEventListener('click', async () => {
+    const blob = await toBlob(canvas);
+    await navigator.clipboard.write([
+        new ClipboardItem({ [blob.type]: blob })
+    ]);
+});
