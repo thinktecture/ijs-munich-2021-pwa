@@ -89,3 +89,14 @@ btnShare.addEventListener('click', async () => {
         await navigator.share(item);
     }
 });
+
+if ('launchQueue' in window) {
+    launchQueue.setConsumer(async params => {
+        const [handle] = params.files;
+        if (handle) {
+            const file = await handle.getFile();
+            const image = await getImage(file);
+            ctx.drawImage(image, 0, 0);
+        }
+    });
+}
