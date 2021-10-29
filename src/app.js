@@ -1,4 +1,4 @@
-import { bresenhamLine, getImage, toBlob } from "./helpers.js";
+import {bresenhamLine, getImage, toBlob} from "./helpers.js";
 
 const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d', {
@@ -12,12 +12,12 @@ ctx.fillStyle = 'black';
 let previousPoint;
 
 canvas.addEventListener('pointerdown', event => {
-    previousPoint = { x: ~~event.offsetX, y: ~~event.offsetY };
+    previousPoint = {x: ~~event.offsetX, y: ~~event.offsetY};
 });
 canvas.addEventListener('pointermove', event => {
     if (previousPoint) {
-        const currentPoint = { x: ~~event.offsetX, y: ~~event.offsetY };
-        for(let point of bresenhamLine(previousPoint.x, previousPoint.y,
+        const currentPoint = {x: ~~event.offsetX, y: ~~event.offsetY};
+        for (let point of bresenhamLine(previousPoint.x, previousPoint.y,
             currentPoint.x, currentPoint.y)) {
             ctx.fillRect(point.x, point.y, 2, 2);
         }
@@ -36,7 +36,7 @@ txtColor.addEventListener('change', () => {
 const fileOptions = {
     types: [{
         description: 'PNG files',
-        accept: { 'image/png': ['.png'] }
+        accept: {'image/png': ['.png']}
     }]
 };
 
@@ -61,6 +61,20 @@ const btnCopy = document.querySelector('#copy');
 btnCopy.addEventListener('click', async () => {
     const blob = await toBlob(canvas);
     await navigator.clipboard.write([
-        new ClipboardItem({ [blob.type]: blob })
+        new ClipboardItem({ [blob.type]: blob} )
     ]);
+});
+
+const btnPaste = document.querySelector('#paste');
+btnPaste.addEventListener('click', async () => {
+    const clipboardItems = await navigator.clipboard.read();
+    for (const clipboardItem of clipboardItems) {
+        for (const type of clipboardItem.types) {
+            if (type === 'image/png') {
+                const blob = await clipboardItem.getType(type);
+                const image = await getImage(blob);
+                ctx.drawImage(image, 0, 0);
+            }
+        }
+    }
 });
