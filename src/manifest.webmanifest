@@ -6,5 +6,12 @@
     "background_color": "#808080",
     "start_url": "/index.html",
     "scope": "/",
-    "icons": [{ "src": "icon.png", "sizes": "512x512" }]
+    "icons": [{ "src": "icon.png", "sizes": "512x512" }],
+    "shortcuts": [{
+        "name": "About Paint",
+        "short_name": "About",
+        "description": "Show information about Paint",
+        "url": "/about.html",
+        "icons": [{ "src": "icon.png", "sizes": "512x512" }]
+    }]
 }
