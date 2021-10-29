@@ -41,13 +41,22 @@ const fileOptions = {
 };
 
 const btnSave = document.querySelector('#save');
-btnSave.disabled = !('showSaveFilePicker' in window);
 btnSave.addEventListener('click', async () => {
     const blob = await toBlob(canvas);
-    const handle = await window.showSaveFilePicker(fileOptions);
-    const writable = await handle.createWritable();
-    await writable.write(blob);
-    await writable.close();
+
+    if ('showSaveFilePicker' in window) {
+        const handle = await window.showSaveFilePicker(fileOptions);
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+    } else {
+        const anchor = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        anchor.href = url;
+        anchor.download = 'untitled.png';
+        anchor.click();
+        URL.revokeObjectURL(url);
+    }
 });
 
 const btnOpen = document.querySelector('#open');
